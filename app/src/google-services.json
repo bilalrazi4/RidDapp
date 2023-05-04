@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "442964428105",
+    "project_id": "riddapp-374ea",
+    "storage_bucket": "riddapp-374ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442964428105:android:a6c82f34a03a827ffac698",
+        "android_client_info": {
+          "package_name": "com.example.riddapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442964428105-seph4kf0jutstiv54v459v4j3q4jkkhf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDFw6CwFMl7hKP0nJ3LG4EjTjKrlgAh6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442964428105-seph4kf0jutstiv54v459v4j3q4jkkhf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
