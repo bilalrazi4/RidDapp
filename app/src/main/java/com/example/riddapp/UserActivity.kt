@@ -61,6 +61,7 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
     private  var destinationLocation: LatLng?=null
     private  var rideBooking: Boolean =false
     private lateinit var findingDriverTextView: TextView
+    private lateinit var btnCancel:Button
 
 
 
@@ -80,6 +81,7 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         tvFare = findViewById(R.id.Fare);
         btnShowDirection = findViewById(R.id.btnShowDirections);
         findingDriverTextView = findViewById(R.id.findingDriverTextView)
+        btnCancel=findViewById(R.id.btnCancel)
 
 
         // Initialize Firebase database
@@ -141,19 +143,25 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
                                     val name = snapshot.child("name").value as? String ?: ""
                                     val number = snapshot.child("mobileNo").value as? String ?: ""
 
+                                    val ridesRef = database.getReference("rides")
+                                    ridesRef.orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            if (snapshot.exists()) {
+                                                Toast.makeText(this@UserActivity, "Ride is already booked press cancel to cancel the previous booking", Toast.LENGTH_SHORT).show()
+                                            } else {
+                                                // Add the data to the rides table
+                                                addToRidesTable(userId, latitude, longitude, destLatitude, destLongitude, name, number)
+                                                rideBooking = true
+                                                findingDriverTextView.visibility = View.VISIBLE
+                                                btnCancel.visibility = View.VISIBLE
+                                            }
 
-                                    // Add the data to the rides table
-                                    addToRidesTable(
-                                        userId,
-                                        latitude,
-                                        longitude,
-                                        destLatitude,
-                                        destLongitude,
-                                        name,
-                                        number
-                                    )
-                                    rideBooking=true
-                                    findingDriverTextView.visibility = View.VISIBLE
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            // Handle the error
+                                        }
+                                    })
                                 }
                             }
 
@@ -165,11 +173,39 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
             }
             else
             {
-                Toast.makeText(this, "Ride is already booked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Ride is already booked press cancel to cancel the previous booking", Toast.LENGTH_SHORT).show()
+                btnCancel.visibility = View.VISIBLE
             }
         }
 
         val showDirectionsButton = findViewById<Button>(R.id.btnShowDirections)
+
+        btnCancel.setOnClickListener {
+            // Get the current user ID
+            val currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+            currentUser?.let { user ->
+                val userId: String = user.uid
+
+                // Remove the ride from the rides table
+                val database = FirebaseDatabase.getInstance()
+                val ridesRef = database.getReference("rides")
+                ridesRef.orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        snapshot.children.forEach {
+                            it.ref.removeValue()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // Handle the error
+                    }
+                })
+
+                rideBooking = false
+                findingDriverTextView.visibility = View.GONE
+                btnCancel.visibility = View.INVISIBLE
+            }
+        }
         showDirectionsButton.setOnClickListener {
             if(destinationLocation==null||currentLocationDirection==null) {
 
