@@ -1,5 +1,6 @@
 package com.example.riddapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -164,6 +165,8 @@ class RegisterActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 finish()
+                                val intent = Intent(this,RegisterVehicle::class.java)
+                                startActivity(intent)
                             } else {
                                 Toast.makeText(
                                     this,

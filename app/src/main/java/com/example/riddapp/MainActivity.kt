@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                         if (userId != null) {
                             usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
-                                    val isDriver = snapshot.child("isDriver").getValue(Boolean::class.java)
+                                    val isDriver = snapshot.child("driver").getValue(Boolean::class.java)
                                     if (isDriver == true) {
                                         // User is a driver
                                         // Perform driver specific actions
@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                                             "Logged in as Driver",
                                             Toast.LENGTH_SHORT
                                         ).show()
+                                        startActivity(Intent(this@MainActivity, DriverActivity::class.java))
                                     } else {
                                         // User is not a driver
                                         // Perform user specific actions

@@ -15,6 +15,18 @@
         android:theme="@style/Theme.RidDapp"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterVehicle"
+            android:exported="false" />
+        <activity
+            android:name=".EndRide"
+            android:exported="false" />
+        <activity
+            android:name=".StartRide"
+            android:exported="false" />
+        <activity
+            android:name=".DriverActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditUser"
             android:exported="false" />
         <activity
