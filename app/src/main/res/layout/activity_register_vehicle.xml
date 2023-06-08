@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".RegisterVehicle">
+
+    <EditText
+        android:id="@+id/carName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Car Name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/carColor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carName"
+        android:layout_marginTop="16dp"
+        android:hint="Car Color"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/carModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carColor"
+        android:layout_marginTop="16dp"
+        android:hint="Car Model"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/carLiscence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carModel"
+        android:layout_marginTop="16dp"
+        android:hint="Car Liscence Number"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/carEnginePowerCC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carLiscence"
+        android:layout_marginTop="16dp"
+        android:hint="Engine Power in CC"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/carNumberPlate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carEnginePowerCC"
+        android:layout_marginTop="16dp"
+        android:hint="Car Number Plate"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/btnRegisterCar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/carNumberPlate"
+        android:layout_marginTop="24dp"
+        android:text="Register Vehicle" />
+
+
+
+</RelativeLayout>
