@@ -15,6 +15,10 @@
         android:theme="@style/Theme.RidDapp"
         tools:targetApi="31">
         <activity
+            android:name=".DriverHistory"
+            android:exported="false" />
+
+        <activity
             android:name=".RegisterVehicle"
             android:exported="false" />
         <activity

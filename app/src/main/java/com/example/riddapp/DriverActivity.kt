@@ -47,43 +47,20 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class DriverActivity() : AppCompatActivity() {
 
-    private lateinit var map: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val LOCATION_PERMISSION_REQUEST_CODE = 1
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
-    private var currentLocation: Location? = null
-    private lateinit var etLocationSearch: EditText
-    private lateinit var btnSearch: Button
-    private lateinit var btnBook: Button
-    private lateinit var btnShowDirection: Button
-    private lateinit var tvDistance: TextView
-    private lateinit var destination: LatLng
-    private lateinit var tvFare: TextView
-    private var currentLocationDirection: LatLng? = null
-    private var destinationLocation: LatLng? = null
-    private var rideBooking: Boolean = false
-    private lateinit var findingDriverTextView: TextView
-    private lateinit var btnCancel: Button
-    private lateinit var rdAccept:Button
-    private lateinit var btnshowride: Button
+
     private lateinit var rideRecyclerView: RecyclerView
     private lateinit var rideArrayList:ArrayList<Rides>
+    private lateinit var empty:TextView
 
-
-
-    constructor(parcel: Parcel) : this() {
-        currentLocation = parcel.readParcelable(Location::class.java.classLoader)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_driver)
         Log.d("tag", "in driver")
-
-        btnshowride = findViewById<Button>(R.id.btnShowRide)
-
-
+        val bottomNavigationHandler = BottomNavigationHandler(this)
+        bottomNavigationHandler.setupWithActivity(this)
         // Initialize Firebase database
         database = FirebaseDatabase.getInstance()
 
@@ -92,13 +69,13 @@ class DriverActivity() : AppCompatActivity() {
 
 
         // Set up search button click listener
-
+    empty=findViewById(R.id.empty)
         rideRecyclerView = findViewById(R.id.rideList)
         rideRecyclerView.layoutManager = LinearLayoutManager(this)
         rideRecyclerView.setHasFixedSize(true)
         rideArrayList = arrayListOf<Rides>()
 
-        btnshowride.setOnClickListener { getRides() }
+        getRides()
 
     }
 
@@ -124,14 +101,20 @@ class DriverActivity() : AppCompatActivity() {
                         Log.d("Number", "Name: $number")
 
                     }
-                    rideRecyclerView.adapter = MyAdapter(this@DriverActivity,rideArrayList)
+
+                        rideRecyclerView.adapter = MyAdapter(this@DriverActivity,rideArrayList)
+
+                }
+                else
+                {
+                    empty.visibility = View.VISIBLE
                 }
 
 
             }
 
             override fun onCancelled(error: DatabaseError) {
-                
+
             }
 
         })
