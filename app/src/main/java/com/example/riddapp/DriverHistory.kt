@@ -43,10 +43,10 @@ class DriverHistory : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists())
                 {
-                    val rc= RidesCompleted(destLatitude = snapshot.child("destLatitude").value.toString().toDouble(), number = snapshot.child("number").value.toString(),name=snapshot.child("name").value.toString(),
-                    latitude = snapshot.child("latitude").value.toString().toDouble())
+                    val rc= RidesCompleted(destLongitude =snapshot.child("destLongitude").value.toString().toDouble() ,destLatitude = snapshot.child("destLatitude").value.toString().toDouble(), number = snapshot.child("number").value.toString(),name=snapshot.child("name").value.toString(),
+                    latitude = snapshot.child("latitude").value.toString().toDouble(),longitude = snapshot.child("longitude").value.toString().toDouble())
 
-
+                    driverHistoryArrayList.add(rc)
 
                     driverHistoryRecyclerView.adapter = DriverHistoryAdapter(this@DriverHistory,driverHistoryArrayList)
 
