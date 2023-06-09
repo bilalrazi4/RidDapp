@@ -84,7 +84,7 @@ class MyAdapter(private val context: Context,private var userList : ArrayList<Ri
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return
+
         }
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->

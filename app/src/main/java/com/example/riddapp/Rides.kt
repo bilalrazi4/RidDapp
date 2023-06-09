@@ -15,4 +15,5 @@ class Rides: Serializable {
  var driverId: String? = ""
  var driverLat: Double? = null
  var driverLong: Double? = null
+ var tvFare: String? = null
 }

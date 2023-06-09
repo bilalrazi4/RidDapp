@@ -41,7 +41,7 @@ import kotlinx.coroutines.*
 //import kotlinx.coroutines.DefaultExecutor.isActive
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-
+import kotlin.properties.Delegates
 
 
 class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
@@ -67,8 +67,7 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
     private var backgroundJob: Job? = null
     private lateinit var daatabase: DatabaseReference
     private var currentUser: FirebaseUser? = null
-
-
+    private var fare by Delegates.notNull<Float>()
 
 
     constructor(parcel: Parcel) : this() {
@@ -288,8 +287,10 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
                             }
                         })
                     backgroundJob?.cancel()
+
                     val intent = Intent(this, RideAcceptUser::class.java)
                     startActivity(intent)
+
                 }
                 .addOnFailureListener { error ->
                     println("Failed to delete current user ride data: ${error.message}")
@@ -302,6 +303,9 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         // Cancel the background task when the activity is destroyed
         backgroundJob?.cancel()
     }
+    object MyAppData {
+        var fare: Float=0.00f
+    }
 
     private fun addToRidesTable(userId: String, latitude: Double, longitude: Double, destLatitude: Double, destLongitude: Double, name: String, number: String) {
         // Get a reference to the rides table in Firebase Realtime Database
@@ -309,7 +313,7 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         val ridesRef = database.getReference("rides")
 
         // Create a new ride object with the necessary fields
-        val ride = Ride(userId, latitude, longitude, destLatitude, destLongitude, name, number)
+        val ride = Ride(userId, latitude, longitude, destLatitude, destLongitude, name, number,fare.toString())
 
         // Add the ride object to the rides table
         ridesRef.push().setValue(ride)
@@ -325,7 +329,7 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         val destLongitude: Double,
         val name: String,
         val number: String,
-        val driverName: String? = "",
+        val tvFare: String? = "",
         val driverNumber: String? = "",
         val accepted: Boolean=false
     )
@@ -385,7 +389,8 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
                 )
                 currentLocationDirection = LatLng(it.latitude, it.longitude)
                 val distance = results[0] / 1000 // Convert to kilometers
-                val fare = distance * 20 // Calculate fare (Rs20/km)
+                fare = distance * 50 // Calculate fare (Rs20/km)
+                MyAppData.fare=fare
 
                 // Update text views
                 tvDistance.text = "Distance: ${String.format("%.2f", distance)} km"
@@ -469,7 +474,8 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
                         destinationLocation = LatLng(latLng.latitude, latLng.longitude)
                     }
                     val distance = results[0] / 1000 // Convert to kilometers
-                    val fare = distance * 20 // Calculate fare (Rs20/km)
+                    fare = distance * 50 // Calculate fare (Rs20/km)
+                    MyAppData.fare=fare
 
                     // Update text views
                     tvDistance.text = "Distance: ${String.format("%.2f", distance)} km"
