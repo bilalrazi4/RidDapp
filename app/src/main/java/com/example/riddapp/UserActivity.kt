@@ -37,6 +37,8 @@ import com.google.maps.GeoApiContext
 import com.google.maps.android.PolyUtil
 import com.google.maps.model.DirectionsResult
 import com.google.maps.model.TravelMode
+import kotlinx.coroutines.*
+//import kotlinx.coroutines.DefaultExecutor.isActive
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
@@ -62,6 +64,9 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
     private  var rideBooking: Boolean =false
     private lateinit var findingDriverTextView: TextView
     private lateinit var btnCancel:Button
+    private var backgroundJob: Job? = null
+    private lateinit var daatabase: DatabaseReference
+    private var currentUser: FirebaseUser? = null
 
 
 
@@ -82,7 +87,8 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         btnShowDirection = findViewById(R.id.btnShowDirections);
         findingDriverTextView = findViewById(R.id.findingDriverTextView)
         btnCancel=findViewById(R.id.btnCancel)
-
+        daatabase = FirebaseDatabase.getInstance().reference
+        currentUser = FirebaseAuth.getInstance().currentUser
 
         // Initialize Firebase database
         database = FirebaseDatabase.getInstance()
@@ -148,6 +154,9 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
                                         override fun onDataChange(snapshot: DataSnapshot) {
                                             if (snapshot.exists()) {
                                                 Toast.makeText(this@UserActivity, "Ride is already booked press cancel to cancel the previous booking", Toast.LENGTH_SHORT).show()
+                                                rideBooking = true
+                                                findingDriverTextView.visibility = View.VISIBLE
+                                                btnCancel.visibility = View.VISIBLE
                                             } else {
                                                 // Add the data to the rides table
                                                 addToRidesTable(userId, latitude, longitude, destLatitude, destLongitude, name, number)
@@ -220,7 +229,78 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
             }
 
         }
+        startBackgroundTask()
 
+    }
+    private fun startBackgroundTask() {
+        backgroundJob = CoroutineScope(Dispatchers.Default).launch {
+            // Perform the background task in a loop
+            while (isActive) {
+                // Do your background task here
+                println("Background task is running...")
+                checkPendingRidesTable()
+
+                // Delay for a certain period of time
+                delay(1000) // Delay of 1 second
+            }
+        }
+    }
+    private fun checkPendingRidesTable() {
+        val pendingRidesRef = daatabase.child("PendingRides")
+        pendingRidesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val isTablePresent = snapshot.exists()
+                if (isTablePresent) {
+                    // PendingRides table exists
+                    deleteCurrentUserRideData()
+                } else {
+                    // PendingRides table does not exist
+                    println("PendingRides table is not present")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                println("Failed to check PendingRides table: ${error.message}")
+            }
+        })
+    }
+
+    private fun deleteCurrentUserRideData() {
+        val ridesRef = daatabase.child("Rides")
+        val currentUserID = currentUser?.uid
+
+        if (currentUserID != null) {
+            ridesRef.child(currentUserID).removeValue()
+                .addOnSuccessListener {
+                    println("Current user ride data deleted")
+                    val database = FirebaseDatabase.getInstance()
+                    val ridesRef = database.getReference("rides")
+                    ridesRef.orderByChild("userId").equalTo(currentUserID)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                snapshot.children.forEach {
+                                    it.ref.removeValue()
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                // Handle the error
+                            }
+                        })
+                    backgroundJob?.cancel()
+                    val intent = Intent(this, RideAcceptUser::class.java)
+                    startActivity(intent)
+                }
+                .addOnFailureListener { error ->
+                    println("Failed to delete current user ride data: ${error.message}")
+                }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Cancel the background task when the activity is destroyed
+        backgroundJob?.cancel()
     }
 
     private fun addToRidesTable(userId: String, latitude: Double, longitude: Double, destLatitude: Double, destLongitude: Double, name: String, number: String) {
