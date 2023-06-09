@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#FDE478"
     tools:context=".RegisterActivity">
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="180dp"
         android:hint="Name"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="textPersonName" />
 
     <EditText
@@ -21,6 +25,8 @@
         android:layout_below="@id/etName"
         android:layout_marginTop="16dp"
         android:hint="Email"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -30,6 +36,8 @@
         android:layout_below="@id/etEmail"
         android:layout_marginTop="16dp"
         android:hint="Password"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="textPassword" />
 
     <EditText
@@ -39,6 +47,8 @@
         android:layout_below="@id/etPassword"
         android:layout_marginTop="16dp"
         android:hint="Re-enter Password"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="textPassword" />
 
     <EditText
@@ -48,6 +58,8 @@
         android:layout_below="@id/etReenterPassword"
         android:layout_marginTop="16dp"
         android:hint="Mobile Number"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="phone" />
 
     <EditText
@@ -57,6 +69,8 @@
         android:layout_below="@id/etMobileNo"
         android:layout_marginTop="16dp"
         android:hint="Driver License For Drivers Only"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <Button
@@ -65,7 +79,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/etDriverLicense"
         android:layout_marginTop="24dp"
-        android:text="Register as User" />
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/black"
+        android:text="Register as User"
+        android:textStyle="bold"
+        android:textColor="#FDE478" />
 
     <Button
         android:id="@+id/btnRegisterAsDriver"
@@ -73,6 +91,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnRegister"
         android:layout_marginTop="16dp"
-        android:text="Register as Driver" />
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/black"
+        android:text="Register as Driver"
+        android:textStyle="bold"
+        android:textColor="#FDE478" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="207dp"
+        android:layout_height="222dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-42dp"
+        android:layout_marginBottom="258dp"
+        app:srcCompat="@drawable/sdasd" />
 
 </RelativeLayout>

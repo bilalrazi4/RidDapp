@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="#FDE478"
     tools:context=".RegisterVehicle">
 
     <EditText
         android:id="@+id/carName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="180dp"
         android:hint="Car Name"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <EditText
@@ -21,6 +25,8 @@
         android:layout_below="@id/carName"
         android:layout_marginTop="16dp"
         android:hint="Car Color"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <EditText
@@ -30,6 +36,8 @@
         android:layout_below="@id/carColor"
         android:layout_marginTop="16dp"
         android:hint="Car Model"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <EditText
@@ -38,7 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/carModel"
         android:layout_marginTop="16dp"
-        android:hint="Car Liscence Number"
+        android:hint="Car License Number"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <EditText
@@ -48,6 +58,8 @@
         android:layout_below="@id/carLiscence"
         android:layout_marginTop="16dp"
         android:hint="Engine Power in CC"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <EditText
@@ -57,16 +69,30 @@
         android:layout_below="@id/carEnginePowerCC"
         android:layout_marginTop="16dp"
         android:hint="Car Number Plate"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:inputType="text" />
 
     <Button
         android:id="@+id/btnRegisterCar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/carNumberPlate"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="Register Vehicle" />
+        android:backgroundTint="@color/black"
+        android:text="Register Vehicle"
+        android:textStyle="bold"
+        android:textColor="#FDE478" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="207dp"
+        android:layout_height="222dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-42dp"
+        android:layout_marginBottom="258dp"
+        app:srcCompat="@drawable/sdasd" />
 
 
 </RelativeLayout>

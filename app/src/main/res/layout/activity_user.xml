@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".UserActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -10,16 +11,19 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp" />
+        android:background="#FDE478"
+        android:layout_below="@+id/layout_search_distance"
+        android:layout_marginTop="0dp" />
+
     <TextView
         android:id="@+id/findingDriverTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Finding a driver for you..."
         android:textAppearance="@android:style/TextAppearance.Medium"
-        android:textColor="@android:color/black"
+        android:textColor="#FDE478"
         android:visibility="invisible"
-        android:background="@color/teal_200"
+        android:background="@color/black"
         android:layout_above="@id/btnShowDirections"/>
 
 
@@ -30,22 +34,28 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="18dp"
         android:layout_marginBottom="16dp"
-        android:text="Book ride" />
+        android:backgroundTint="@color/black"
+        android:text="Book ride"
+        android:textColor="#FDE478"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
+        android:textColor="#FDE478"
+        android:textStyle="bold"
+        android:backgroundTint="@color/black"
         android:layout_alignParentEnd="true"
         android:layout_above="@id/btnBookRide"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+
         android:visibility="invisible" />
 
     <Button
@@ -54,10 +64,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:textColor="#FDE478"
+        android:textStyle="bold"
+        android:backgroundTint="@color/black"
         android:text="Show Directions" />
 
 
@@ -65,47 +78,56 @@
         android:id="@+id/layout_search_distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="16dp">
+        android:background="@color/black"
+        android:backgroundTint="#FDE478"
+        android:padding="21dp">
+
 
         <EditText
             android:id="@+id/etLocationSearch"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="Enter location"
             android:inputType="text"
             android:maxLines="1"
-            android:padding="8dp" />
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
 
         <Button
             android:id="@+id/btnSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/etLocationSearch"
-            android:padding="8dp"
-            android:text="Search" />
-
+            android:layout_below="@+id/etLocationSearch"
+            android:layout_alignEnd="@+id/etLocationSearch"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="27dp"
+            android:backgroundTint="@color/black"
+            android:text="Search"
+            android:textColor="#FDE478"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/etLocationSearch"
+            android:layout_marginTop="25dp"
             android:padding="8dp"
             android:text="Distance: "
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/Fare"
-            android:layout_width="wrap_content"
+            android:layout_width="135dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDistance"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="100dp"
             android:padding="8dp"
             android:text="Fare: "
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
     </RelativeLayout>
