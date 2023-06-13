@@ -3,8 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     tools:context=".UserActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#FDE478"
+        android:elevation="1dp"
+        android:title=""
+        app:titleMarginStart="16dp"
+        app:titleMarginEnd="16dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:contentInsetEndWithActions="0dp"
+
+        app:navigationIcon="@null"
+
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map"
@@ -80,7 +97,8 @@
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:backgroundTint="#FDE478"
-        android:padding="21dp">
+        android:layout_marginTop="35dp"
+        android:padding="30dp">
 
 
         <EditText

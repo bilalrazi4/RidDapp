@@ -18,6 +18,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
@@ -70,10 +71,12 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
     private var fare by Delegates.notNull<Float>()
 
 
+
     constructor(parcel: Parcel) : this() {
         currentLocation = parcel.readParcelable(Location::class.java.classLoader)
     }
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
@@ -89,11 +92,21 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         daatabase = FirebaseDatabase.getInstance().reference
         currentUser = FirebaseAuth.getInstance().currentUser
 
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            supportActionBar?.setDisplayShowHomeEnabled(false)
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        }
+
         // Initialize Firebase database
         database = FirebaseDatabase.getInstance()
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+
 
         // Check for location permission
         if (ContextCompat.checkSelfPermission(

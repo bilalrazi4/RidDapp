@@ -65,6 +65,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/black"
+        android:layout_centerInParent="true"
         android:text="Forgot Password"
         android:textStyle="bold"
         android:textColor="#FDE478" />
