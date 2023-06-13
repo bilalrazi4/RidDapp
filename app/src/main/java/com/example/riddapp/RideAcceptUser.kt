@@ -1,10 +1,16 @@
 package com.example.riddapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import android.widget.TextView
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+
+import kotlinx.coroutines.*
 import java.lang.Math.*
 
 class RideAcceptUser : AppCompatActivity() {
@@ -17,10 +23,71 @@ class RideAcceptUser : AppCompatActivity() {
     private lateinit var carColorTextView: TextView
     private lateinit var carModelTextView: TextView
     private lateinit var numberPlateTextView: TextView
+    private var backgroundJob: Job? = null
+    private lateinit var daatabase: DatabaseReference
     private val EARTH_RADIUS = 6371
+    private lateinit var ridesRef:DatabaseReference
+    private val handler = Handler()
+    private val delayMillis = 1000L // 1 second
+
+    private val runnable = object : Runnable {
+        override fun run() {
+            // Call your function here
+            searchPendingRidesTableForCurrentUser(currentUserID)
+
+            // Schedule the next execution
+            handler.postDelayed(this, delayMillis)
+        }
+    }
+    private fun searchPendingRidesTableForCurrentUser(currentUserId: String) {
+        val database = FirebaseDatabase.getInstance()
+        val ridesRef = database.getReference("PendingRides")
+
+        ridesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    // Iterate through each child node in the "pending_rides" table
+                    for (rideSnapshot in snapshot.children) {
+                        val userId = rideSnapshot.child("userId").value.toString()
+
+                        // Check if the current user ID matches the user ID in the table
+                        if (currentUserId == userId) {
+                            // Current user ID found in the "userId" field
+                            println("Current user ID found in the pending rides table.")
+
+                            // Perform any further actions or retrieve data as needed
+                        }
+                        else
+                        {
+                            handler.removeCallbacks(runnable)
+                            val intent = Intent(this@RideAcceptUser, UserThankyou::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                } else {
+                    // The "pending_rides" table does not exist
+                    println("The pending rides table does not exist.")
+                    handler.removeCallbacks(runnable)
+                    val intent = Intent(this@RideAcceptUser, UserThankyou::class.java)
+                    startActivity(intent)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle the error if necessary
+                println("Error occurred: ${error.message}")
+            }
+        })
+    }
+
+    private fun checkPendingRidesTables() {
+        Toast.makeText(this@RideAcceptUser, "working", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ride_accept_user)
+
 
         currentUserID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         driverNameTextView = findViewById(R.id.driverNameTextView)
@@ -30,13 +97,25 @@ class RideAcceptUser : AppCompatActivity() {
         carModelTextView=findViewById(R.id.carModelTextView)
         carNameTextView=findViewById(R.id.carNameTextView)
         numberPlateTextView=findViewById(R.id.numberPlateTextView)
+        val database = FirebaseDatabase.getInstance()
+        ridesRef = database.getReference("PendingRides")
 
 
         // Check if current user ID is present in the pending rides table
         checkIfCurrentUserExistsInPendingRides()
+        handler.postDelayed(runnable, delayMillis)
+
 
 
     }
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Stop the repeated execution when the activity is destroyed
+        handler.removeCallbacks(runnable)
+    }
+
+
     private fun checkIfCurrentUserExistsInPendingRides() {
         databaseReference.child("PendingRides").addListenerForSingleValueEvent(object : ValueEventListener {
 

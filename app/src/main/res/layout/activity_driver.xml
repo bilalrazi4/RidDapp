@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FDE478"
     tools:context=".DriverActivity">
 
 
@@ -10,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No Rides to show...."
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="21sp"
         android:textStyle="bold"
         android:visibility="gone"
@@ -18,9 +19,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rideList"
+        android:background="#FDE478"
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/rides_item"/>
-    <include layout="@layout/layout_bottom_navigation" />
+        tools:listitem="@layout/rides_item" />
+
+    <include layout="@layout/layout_bottom_navigation"
+        />
 
 </RelativeLayout>
