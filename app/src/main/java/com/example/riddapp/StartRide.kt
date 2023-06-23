@@ -13,7 +13,9 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.constraintlayout.motion.widget.Debug.getLocation
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -39,6 +41,8 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
     private var driverLatLng: LatLng = LatLng(0.0, 0.0)
     private var clientLatLng: LatLng = LatLng(0.0, 0.0)
     private lateinit var startRide: Button
+    private lateinit var showDirection: Button
+    private lateinit var Iarrived: Button
     private lateinit var endRide: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +50,11 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_start_ride)
         FirebaseApp.initializeApp(this)
         startRide = findViewById(R.id.stRide)
+        showDirection = findViewById(R.id.shDirection)
+        Iarrived = findViewById(R.id.arrived)
         endRide = findViewById(R.id.endRide)
+        startRide.visibility = View.GONE
+        endRide.visibility = View.GONE
         // Check if permission is granted
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -70,7 +78,19 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-        startRide.setOnClickListener { StarttheRide() }
+        Iarrived.setOnClickListener { StarttheRide()
+
+
+        }
+
+
+        startRide.setOnClickListener {
+            Toast.makeText(this,"Ride has Started",Toast.LENGTH_LONG).show()
+            endRide.visibility = View.VISIBLE
+            startRide.visibility = View.GONE
+        }
+
+
         endRide.setOnClickListener { EndtheRide() }
 
 
@@ -121,6 +141,9 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
 
 
     fun StarttheRide() {
+
+        startRide.visibility = View.VISIBLE
+        Iarrived.visibility = View.GONE
         val database = FirebaseDatabase.getInstance()
         val ref = database.reference
         val user = FirebaseAuth.getInstance().currentUser
@@ -186,18 +209,44 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
         val user = FirebaseAuth.getInstance().currentUser
         val driverId = user!!.uid
         val pendRides = ref.child("PendingRides").child(driverId)
+        var docId:String? = null
+
 
 
         pendRides.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(datasnapshot: DataSnapshot) {
                 Log.d("DataSnapshot", datasnapshot.toString())
                 val item = datasnapshot.getValue(Rides::class.java)
+                val rd = ref.child("rides").orderByChild("userId").equalTo(item?.userId)
+
                 val RdCompleteReference =
-                    database.getReference("RidesCompleted").child(item?.driverId!!)
-                val RdCompleted = RdCompleteReference.setValue(item).addOnSuccessListener {
+                    database.getReference("RidesCompleted")
+                val RdCompleted = RdCompleteReference.push()
+                    docId = RdCompleted.key
+
+                    RdCompleted.setValue(item).addOnSuccessListener {
+
+
                     pendRides.removeValue().addOnSuccessListener {
+                        rd.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                for (rideSnapshot in dataSnapshot.children) {
+                                    rideSnapshot.ref.removeValue()
+
+                                }
+                                val intent = Intent(this@StartRide, EndRide::class.java)
+
+                                intent.putExtra("docId",docId)
+                                startActivity(intent)
+                            }
+
+                            override fun onCancelled(databaseError: DatabaseError) {
+                                // Handle the error if needed
+                            }
+                        })
 
                     }.addOnFailureListener {}
+
 
 
                 }.addOnFailureListener { }
@@ -210,8 +259,7 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
             }
 
         })
-        val intent = Intent(this, EndRide::class.java)
-        this.startActivity(intent)
+
     }
 
 

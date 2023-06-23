@@ -35,18 +35,30 @@ class DriverHistory : AppCompatActivity() {
 
 
 
-        val ridesRef = ref.child("RidesCompleted").child(driverId)
+        val ridesRef = ref.child("RidesCompleted")
+
+        val query  = ridesRef.orderByChild("driverId").equalTo(driverId)
         Log.d("driverId","$driverId")
 
         Log.d("ridesRefffff","$ridesRef")
-        ridesRef.addValueEventListener(object: ValueEventListener {
+        query.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists())
                 {
-                    val rc= RidesCompleted(destLongitude =snapshot.child("destLongitude").value.toString().toDouble() ,destLatitude = snapshot.child("destLatitude").value.toString().toDouble(), number = snapshot.child("number").value.toString(),name=snapshot.child("name").value.toString(),
-                    latitude = snapshot.child("latitude").value.toString().toDouble(),longitude = snapshot.child("longitude").value.toString().toDouble())
+                   for(s in snapshot.children)
+                   {
 
-                    driverHistoryArrayList.add(rc)
+                        val rc =RidesCompleted()
+                        rc.name = s.child("name").getValue(String::class.java)
+                        rc.number = s.child("number").getValue(String::class.java)
+                        rc.destLongitude = s.child("destLongitude").getValue(Double::class.java)
+                        rc.destLatitude = s.child("destLatitude").getValue(Double::class.java)
+                        rc.longitude = s.child("longitude").getValue(Double::class.java)
+                        rc.latitude = s.child("latitude").getValue(Double::class.java)
+                       driverHistoryArrayList.add(rc)
+
+                   }
+
 
                     driverHistoryRecyclerView.adapter = DriverHistoryAdapter(this@DriverHistory,driverHistoryArrayList)
 

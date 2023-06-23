@@ -6,4 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".EndRide">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="76dp"
+        android:layout_height="14dp"
+        android:text="Thank you"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Fare : "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/totalFare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/cash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay by Cash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/jc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="110dp"
+        android:text="Pay through JC"
+        app:layout_constraintBottom_toBottomOf="@+id/cash"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/ep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay through EP"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/crypto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="116dp"
+        android:text="Pay  crypto Wallet"
+        app:layout_constraintBottom_toBottomOf="@+id/ep"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
