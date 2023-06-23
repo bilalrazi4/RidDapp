@@ -61,14 +61,14 @@
         android:id="@+id/btnResetPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnRegister"
+        android:layout_below="@+id/btnRegister"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/black"
-        android:layout_centerInParent="true"
         android:text="Forgot Password"
-        android:textStyle="bold"
-        android:textColor="#FDE478" />
+        app:layout_cons
+        android:textColor="#FDE478"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageView"

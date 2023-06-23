@@ -16,23 +16,13 @@
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="-26dp" />
 
-    <Button
-        android:id="@+id/stRide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-        android:text="Start Ride"
-        android:textColor="#FDE478"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/arrived"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:backgroundTint="@color/black"
         android:text="I have arrived"
         android:textColor="#FDE478"
@@ -41,29 +31,46 @@
         app:layout_constraintTop_toBottomOf="@+id/shDirection" />
 
     <Button
+        android:id="@+id/shDirection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:text="Show Directions"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/black"
+        android:textColor="#FDE478"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
         android:id="@+id/endRide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
         android:text="End Ride"
+        android:backgroundTint="@color/black"
         android:textColor="#FDE478"
         android:textStyle="bold"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/shDirection"
+        android:id="@+id/stRide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
+        android:text="Start Ride"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/black"
-        android:text="Show Directions"
         android:textColor="#FDE478"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

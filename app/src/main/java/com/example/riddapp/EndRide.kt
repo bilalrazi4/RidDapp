@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.lang.Integer.parseInt
 
 class EndRide : AppCompatActivity() {
 
@@ -39,7 +40,9 @@ class EndRide : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 var price =  snapshot.child("tvFare").getValue() as String
-                fare.text = price
+                val fareFloat = price.toFloat()
+                val fareInt = fareFloat.toInt()
+                fare.text = fareInt.toString()
             }
 
             override fun onCancelled(error: DatabaseError) {
