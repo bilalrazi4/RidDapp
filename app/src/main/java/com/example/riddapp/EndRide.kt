@@ -31,6 +31,8 @@ class EndRide : AppCompatActivity() {
         val ep  = findViewById<Button>(R.id.ep)
         val jc  = findViewById<Button>(R.id.jc)
         val cry = findViewById<Button>(R.id.crypto)
+        val mainmewnu = findViewById<Button>(R.id.menu)
+
 
 
 
@@ -56,6 +58,12 @@ class EndRide : AppCompatActivity() {
         cash.setOnClickListener {
             Toast.makeText(this,"Kindly receive the money from user", Toast.LENGTH_LONG).show()
             val intent = Intent(this,DriverActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        mainmewnu.setOnClickListener {
+            val intent= Intent(this,DriverActivity::class.java)
             startActivity(intent)
         }
 

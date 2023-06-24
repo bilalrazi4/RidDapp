@@ -56,12 +56,12 @@
         android:id="@+id/cash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pay by Cash"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/black"
+        android:text="Pay by Cash"
         android:textColor="#FDE478"
         android:textStyle="bold"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -69,12 +69,12 @@
         android:id="@+id/jc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
         android:layout_marginBottom="115dp"
         android:backgroundTint="@color/black"
         android:text="Pay through JC"
         android:textColor="#FDE478"
         android:textStyle="bold"
-        android:layout_marginLeft="5dp"
 
         app:layout_constraintBottom_toBottomOf="@+id/cash"
         app:layout_constraintStart_toStartOf="parent" />
@@ -83,12 +83,12 @@
         android:id="@+id/ep"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pay through EP"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/black"
+        android:text="Pay through EP"
         android:textColor="#FDE478"
         android:textStyle="bold"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -96,14 +96,27 @@
         android:id="@+id/crypto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="115dp"
-        android:text="Pay  crypto Wallet"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="115dp"
         android:backgroundTint="@color/black"
+        android:text="Pay  crypto Wallet"
         android:textColor="#FDE478"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ep"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:text="Menu"
+        android:textColor="#FDE478"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/ep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jc" />
 
     <ImageView
         android:id="@+id/imageView"
