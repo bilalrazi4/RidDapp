@@ -85,6 +85,9 @@ class EndRide : AppCompatActivity() {
 
 
     }
+    override fun onBackPressed() {
+        // Do nothing to disable the back button
+    }
 
     private fun showEp() {
         val dialog = Dialog(this)

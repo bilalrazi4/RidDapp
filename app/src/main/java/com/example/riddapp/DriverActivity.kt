@@ -78,6 +78,10 @@ class DriverActivity() : AppCompatActivity() {
         getRides()
 
     }
+    override fun onBackPressed() {
+        // Do nothing to disable the back button
+    }
+
 
 
     private fun getRides() {

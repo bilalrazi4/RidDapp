@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
     private lateinit var usersRef: DatabaseReference
+    private var lastBackPressTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,5 +139,17 @@ class MainActivity : AppCompatActivity() {
                     println("Failed to send password reset email: ${task.exception?.message}")
                 }
             }
+    }
+    override fun onBackPressed() {
+        val currentTime = System.currentTimeMillis()
+
+        // Check if the back button was pressed twice within a short interval (e.g., 2 seconds)
+        if (currentTime - lastBackPressTime < 2000) {
+            // Perform any necessary cleanup or additional actions before closing the app
+            super.onBackPressed() // Call the default back button behavior to close the app
+        } else {
+            lastBackPressTime = currentTime
+            Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
+        }
     }
 }

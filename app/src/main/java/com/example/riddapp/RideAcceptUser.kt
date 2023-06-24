@@ -39,6 +39,9 @@ class RideAcceptUser : AppCompatActivity() {
             handler.postDelayed(this, delayMillis)
         }
     }
+    override fun onBackPressed() {
+        // Do nothing to disable the back button
+    }
     private fun searchPendingRidesTableForCurrentUser(currentUserId: String) {
         val database = FirebaseDatabase.getInstance()
         val ridesRef = database.getReference("PendingRides")

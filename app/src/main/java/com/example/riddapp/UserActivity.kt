@@ -69,6 +69,8 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var daatabase: DatabaseReference
     private var currentUser: FirebaseUser? = null
     private var fare by Delegates.notNull<Float>()
+    private var lastBackPressTime: Long = 0
+
 
 
 
@@ -436,6 +438,10 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+    override fun onBackPressed() {
+        // Your code here
+    }
+
 
     private fun initMap() {
         // Initialize map fragment
@@ -502,6 +508,8 @@ class UserActivity() : AppCompatActivity(), OnMapReadyCallback {
             e.printStackTrace()
         }
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.usermenu, menu)

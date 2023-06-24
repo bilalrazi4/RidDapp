@@ -105,6 +105,9 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
 
 
     }
+    override fun onBackPressed() {
+        // Do nothing to disable the back button
+    }
 
     override fun onResume() {
         super.onResume()
