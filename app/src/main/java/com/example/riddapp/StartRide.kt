@@ -13,6 +13,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -42,6 +43,7 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
     private var clientLatLng: LatLng = LatLng(0.0, 0.0)
     private lateinit var startRide: Button
     private lateinit var showDirection: Button
+    private lateinit var showDirectiondrop: Button
     private lateinit var Iarrived: Button
     private lateinit var endRide: Button
 
@@ -51,10 +53,12 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
         FirebaseApp.initializeApp(this)
         startRide = findViewById(R.id.stRide)
         showDirection = findViewById(R.id.shDirection)
+        showDirectiondrop = findViewById(R.id.shDirectionDest)
         Iarrived = findViewById(R.id.arrived)
         endRide = findViewById(R.id.endRide)
         startRide.visibility = View.GONE
         endRide.visibility = View.GONE
+        showDirectiondrop.visibility = View.GONE
         // Check if permission is granted
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -77,6 +81,12 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
         mapView.getMapAsync(this)
 
 
+        showDirection.setOnClickListener {
+            showDirections()
+        }
+        showDirectiondrop.setOnClickListener {
+            showDirectionsdestination()
+        }
 
         Iarrived.setOnClickListener { StarttheRide()
 
@@ -116,6 +126,27 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
         mapView.onLowMemory()
     }
 
+    private fun showDirections() {
+
+        val uri =
+            Uri.parse("https://www.google.com/maps/dir/?api=1&origin=${driverLatLng!!.latitude},${driverLatLng!!.longitude}&destination=${clientLatLng!!.latitude},${clientLatLng!!.longitude}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.setPackage("com.google.android.apps.maps")
+        startActivity(intent)
+
+
+    }
+
+    private fun showDirectionsdestination() {
+
+        val uri =
+            Uri.parse("https://www.google.com/maps/dir/?api=1&origin=${driverLatLng!!.latitude},${driverLatLng!!.longitude}&destination=${clientLatLng!!.latitude},${clientLatLng!!.longitude}")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.setPackage("com.google.android.apps.maps")
+        startActivity(intent)
+
+
+    }
     override fun onMapReady(map: GoogleMap) {
 
         googleMap = map
@@ -144,6 +175,8 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
 
         startRide.visibility = View.VISIBLE
         Iarrived.visibility = View.GONE
+        showDirection.visibility = View.GONE
+        showDirectiondrop.visibility = View.VISIBLE
         val database = FirebaseDatabase.getInstance()
         val ref = database.reference
         val user = FirebaseAuth.getInstance().currentUser
@@ -222,9 +255,9 @@ class StartRide : AppCompatActivity(), OnMapReadyCallback {
                 val RdCompleteReference =
                     database.getReference("RidesCompleted")
                 val RdCompleted = RdCompleteReference.push()
-                    docId = RdCompleted.key
+                docId = RdCompleted.key
 
-                    RdCompleted.setValue(item).addOnSuccessListener {
+                RdCompleted.setValue(item).addOnSuccessListener {
 
 
                     pendRides.removeValue().addOnSuccessListener {
